@@ -10,6 +10,11 @@
         "shots": true
       },
       {
+        "key": "connect4",
+        "name": "Connect 4 kata",
+        "dir": "../examples/connect4/ail"
+      },
+      {
         "key": "site",
         "name": "This website",
         "dir": "ail"

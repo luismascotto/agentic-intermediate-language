@@ -18,14 +18,15 @@
   `bun test` and `bun run typecheck`. Example projects depend on the linked
   `ail`.
 - `bun test` includes end-to-end checks of `examples/tictactoe`, which needs
-  `bun install` in that folder first.
+  `bun install` in that folder first. `examples/connect4` is a second kata;
+  install there the same way when working on it.
 - `site/` is the website, and it is an AIL project. Change its pages through
   its spec in `site/ail/` and `ail build`, never by editing `site/src/gen`.
   Its spec browser (a read-only Monaco editor) shows `site/src/gen/spec.ts`,
-  which `ail build` writes without a model from both `site/ail/` and
-  `examples/tictactoe/ail/`. So after editing the kata's spec, also run
-  `ail build` in `site/` (no model calls are needed for that), or the site's
-  build fails its check.
+  which `ail build` writes without a model from `site/ail/` and the example
+  specs under `examples/*/ail/` (including Tic-Tac-Toe and Connect 4). So after
+  editing a kata's spec, also run `ail build` in `site/` (no model calls are
+  needed for that), or the site's build fails its check.
 - The plugin ships to Claude Code (`.claude-plugin/`, `hooks/hooks.json`),
   Cursor (`.cursor-plugin/`, `hooks/cursor.json`) and GitHub Copilot
   (`.github/plugin/`, `hooks/copilot.json`). They share `skills/`,

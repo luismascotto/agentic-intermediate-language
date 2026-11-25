@@ -262,6 +262,7 @@ skills/ commands/ hooks/    the agent plugins, shared by:
   .cursor-plugin/    Cursor
   .github/plugin/    the GitHub Copilot CLI
 examples/tictactoe/  the demo: spec in ail/, generated code, derived checks, lock file
+examples/connect4/   Connect 4 kata: 6×7 drop game, same layout as the demo
 editors/vscode/      the VS Code extension: highlighting, Go to Definition and references for AIL
 site/                the website, written in AIL (spec in site/ail/); its spec browser shows both example specs in a read-only Monaco editor
 tests/               toolchain tests
@@ -280,3 +281,7 @@ bun test
 ```bash
 bun run typecheck
 ```
+
+Example projects depend on the linked `ail`. `examples/tictactoe` and
+`examples/connect4` need `bun install` in those folders before their checks
+run.
