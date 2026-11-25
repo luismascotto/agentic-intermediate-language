@@ -1,63 +1,79 @@
-# Using this toolchain in Cursor
+# Using AIL with Cursor
 
-This guide is for **contributors working on this repository** in Cursor. End
-users of AIL who want Claude Code's marketplace plugin should follow
-[claude-code.md](claude-code.md) instead.
+AIL ships as a Cursor plugin, from the same repository as the Claude Code
+plugin. It has the same skill, commands, MCP tools and hooks. Builds run on
+your Cursor subscription through the Cursor CLI, so no API key is needed.
 
-## What Cursor gets
+## Install
 
-| | Path | Role |
+You need [Bun](https://bun.sh) 1.2 or later, and Cursor 2.5 or later.
+
+**For yourself.** Clone the plugin into Cursor's local plugin folder:
+
+```bash
+git clone https://github.com/ffMathy/agentic-intermediate-language ~/.cursor/plugins/local/ail
+```
+
+Then run **Developer: Reload Window**.
+
+**For your team** (Teams and Enterprise). In the Cursor dashboard, open
+Plugins & MCPs → Team Marketplaces → Add Marketplace → Import from Repo. Paste
+`https://github.com/ffMathy/agentic-intermediate-language`. Its marketplace is
+[`.cursor-plugin/marketplace.json`](../.cursor-plugin/marketplace.json).
+Everyone can then install `ail` from Customize, for a project or for
+themselves.
+
+To build without a Cursor window open (from a terminal, or when Claude Code
+isn't installed), install the [Cursor CLI](https://cursor.com/docs/cli) and
+log in once with `cursor-agent login`.
+
+## Updates
+
+The plugin has no pinned version, so every merge to `main` is a new version.
+If you cloned it, update it with:
+
+```bash
+git -C ~/.cursor/plugins/local/ail pull
+```
+
+Then reload the window. A team marketplace picks up `main` on its own.
+
+## What the plugin adds
+
+| | Name | What it's for |
 |---|---|---|
-| Rules | `.cursor/rules/ail-agents.mdc` | Always on: hard rules from [AGENTS.md](../AGENTS.md) |
-| Rules | `.cursor/rules/ail-spec.mdc` | When `*.ail.md` is in play: edit spec, never gen |
-| Skill | `.cursor/skills/ail/` | Points at the canonical [skills/ail/SKILL.md](../skills/ail/SKILL.md) |
-| MCP | `.cursor/mcp.json` | Stdio server: `bun src/mcp.ts` |
+| Command | `build [Node…]` | Compile everything that changed, then check everything |
+| Command | `adopt` | Bring an existing app under AIL: its spec from its tickets, its people, the running app and its code, then proof that the spec describes it |
+| Skill | `ail` | How to write, split, share and review nodes. The agent loads it when you work on `*.ail.md` files |
+| MCP tools | `ail_show`, `ail_build`, `ail_adopt` | Look at the spec (the tree, a node, or what changed), build it, and check a running app against it |
+| Hooks | — | Block edits to generated files, and lint the spec after every `.ail.md` edit |
 
-Hard rules stay in `AGENTS.md` (Claude Code loads them via `CLAUDE.md`). The
-Cursor files are a host adapter, not a second source of truth.
+Pick the commands from the `/` menu in chat. To look at the spec, ask in
+plain words ("show me the tree", "what changed?"), and the agent calls
+`ail_show`.
 
-## Enable the MCP server
+## How it fits together
 
-1. Open this repo in Cursor.
-2. Enable the project MCP server `ail` when Cursor prompts, or turn it on under
-   MCP settings.
-3. Confirm tools `ail_show`, `ail_build`, and `ail_adopt` appear.
+- **Manifest.** [`.cursor-plugin/plugin.json`](../.cursor-plugin/plugin.json).
+  The skill (`skills/`) and the commands (`commands/`) are shared with
+  Claude Code and Copilot.
+- **Hooks.** [`hooks/cursor.json`](../hooks/cursor.json) runs
+  `ail hook pre|post --for cursor` before and after every `Write`:
+  - Before the write, an edit to generated code is denied with
+    `{"permission": "deny"}`.
+  - After it, lint problems in the spec go back to the agent as
+    `additional_context`.
+- **MCP.** The server is started with `AIL_HOST=cursor`. So without
+  `ANTHROPIC_API_KEY`, `ail_build` compiles with the Cursor CLI when it is
+  installed:
+  - every node gets its own `cursor-agent -p --mode ask` call
+  - each call runs from an empty folder, so it sees only that node's slice of
+    the spec
+  - if the Cursor CLI isn't installed, the build uses Claude Code or the
+    Copilot CLI instead
 
-The server is the same process the Claude Code plugin uses. It needs
-[Bun](https://bun.sh) 1.2 or later on your `PATH`.
+  To choose a model, set `models` in `ail.config.json`, for example
+  `["cursor:sonnet-4"]`.
 
-## Develop
-
-```bash
-bun install && bun link
-```
-
-```bash
-bun test
-```
-
-```bash
-bun run typecheck
-```
-
-Example projects depend on the linked `ail` binary. `examples/tictactoe` and
-`examples/connect4` need `bun install` in those folders before their checks run.
-
-## Typical session
-
-1. Change behaviour in `*.ail.md` (or ask the agent to), never in generated
-   trees such as `src/gen/**` or `site/src/gen/**`.
-2. Use MCP `ail_show` (or `ail show`) to inspect the tree, a node, or changes.
-3. Build with MCP `ail_build` or `ail build`. It must pass before you finish.
-4. If the compiler returns `STOP: …`, answer in the spec; do not guess in code.
-
-Slash commands `/ail:build` and `/ail:adopt` are Claude Code plugin surfaces.
-In Cursor, call the MCP tools or the CLI instead.
-
-## Platform note (Windows)
-
-This Cursor adapter and the Connect 4 example were exercised only on **Windows**.
-Steps that assume a POSIX shell (`sh` / bash)—for example some `ail adopt`
-process hooks, `command:` compile providers, and certain CI/site check
-invocations—were **not** re-verified here. Prefer WSL, macOS, or Linux when
-you need those paths; treat Windows results as partial coverage until then.
+Everything else is as in the [Claude Code guide](claude-code.md): the typical
+session, CI, and how to start a new project.

@@ -1,4 +1,4 @@
-// ail-derived-from: ExperienceFigure@d7579bb80400fb75
+// ail-derived-from: ExperienceFigure@2bba690dcd4beaa9
 import { afterEach, expect, test } from "bun:test";
 import { cleanup, render, screen } from "@testing-library/react";
 import { ExperienceFigure } from "../../../../src/gen/home/journey/stops/experience-figure";

@@ -32,6 +32,12 @@ claude plugin update ail@agentic-intermediate-language
 
 Then run `/reload-plugins`, or restart Claude Code.
 
+To get AIL colored in VS Code or Cursor as well, install the extension from
+[`editors/vscode`](../editors/vscode).
+
+The same plugin also runs in [Cursor](cursor.md) and in
+[GitHub Copilot](copilot.md).
+
 ## What the plugin adds
 
 | | Name | What it's for |
@@ -87,7 +93,7 @@ ail build
 ail show changes
 ```
 
-`ail build` uses Claude Code's login when `ANTHROPIC_API_KEY` isn't set.
+`ail build` uses Claude Code's login when `ANTHROPIC_API_KEY` isn't set (or, without Claude Code, the Cursor or Copilot CLI's).
 Each node is compiled with `claude -p`, with Claude Code's tools disabled and
 from an empty directory, so only the node's slice of the spec reaches the
 model.

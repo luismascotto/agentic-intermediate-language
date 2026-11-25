@@ -1,0 +1,13 @@
+{
+  "node": "WalkTitleBar",
+  "shots": [
+    {
+      "test": "the tabs",
+      "file": "01-the-tabs.png"
+    },
+    {
+      "test": "arrow keys",
+      "file": "02-arrow-keys.png"
+    }
+  ]
+}

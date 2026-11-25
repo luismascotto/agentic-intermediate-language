@@ -15,13 +15,13 @@ node SpecEditor : view   level: experience
       Given the text "node A : fn   level: system" and the label "Source of a.ail.md"
       Then the region named "Source of a.ail.md" contains "node A : fn   level: system"
   look
-    box       a div: width 100%, height 100%, min-height 320px, background color.code
+    box       a div: width 100%, max-width 100%, min-width 0, height 100%, min-height 320px, overflow hidden, background color.code
     editor    the Monaco editor filling the box, theme "ail-dark"
     fallback  CodeBlock with the text's lines and the label, inside a div with height 100% and overflow-y auto
   binds
     props     text: text, path: text, label: text
     lines     the text split on line breaks, without a trailing empty line
-    editor    the default export Editor of @monaco-editor/react with value = text, path = "ail:" + path, language "ail", theme "ail-dark", height "100%", loading = the fallback, and options: readOnly true, domReadOnly true, minimap enabled false, wordWrap "on", lineNumbers "on", scrollBeyondLastLine false, fontSize 13, fontFamily "Inconsolata, ui-monospace, monospace", renderLineHighlight "none", automaticLayout true, padding top 12 and bottom 12, ariaLabel = label
+    editor    the default export Editor of @monaco-editor/react with value = text, path = "ail:" + path, language "ail", theme "ail-dark", height "100%", loading = the fallback, and options: readOnly true, domReadOnly true, minimap enabled false, wordWrap "on", lineNumbers "on", lineNumbersMinChars 3, glyphMargin false, folding false, lineDecorationsWidth 8, scrollBeyondLastLine false, fontSize 13, fontFamily "Inconsolata, ui-monospace, monospace", renderLineHighlight "none", automaticLayout true, padding top 12 and bottom 12, ariaLabel = label
     language  in beforeMount, only if no registered language has the id "ail": register the language "ail" and set its Monarch tokenizer to one root state with these rules, in this order:
                 /^#.*$/ → "keyword.md"
                 /^```.*$/ → "comment"

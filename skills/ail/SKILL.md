@@ -9,8 +9,8 @@ does observably, and **how** its key decisions were made. Detail is delegated
 to children. People review the spec; generated code (the target's `generated`
 paths) is never edited by hand, and hooks block attempts to.
 
-Tools: `ail_show` looks at the spec (the tree, a node, or what changed); `ail_build` builds it, then checks everything (`/ail:build`
-calls it); `ail_adopt` checks a running app against the spec.
+Tools: `ail_show` looks at the spec (the tree, a node, or what changed); `ail_build` builds it, then checks everything (the `build`
+command calls it: `/ail:build` in Claude Code); `ail_adopt` checks a running app against the spec.
 
 ## Node shape
 ```ail

@@ -1,0 +1,68 @@
+{
+  "name": "ail",
+  "displayName": "AIL: Agentic Intermediate Language",
+  "description": "AIL specs in VS Code: highlighting, Go to Definition and Find All References for nodes, in .ail.md files and ```ail blocks.",
+  "version": "0.2.0",
+  "publisher": "ffMathy",
+  "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ffMathy/agentic-intermediate-language",
+    "directory": "editors/vscode"
+  },
+  "homepage": "https://ffmathy.github.io/agentic-intermediate-language/",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "workspaceContains:**/*.ail.md",
+    "onLanguage:ail"
+  ],
+  "main": "./extension.js",
+  "keywords": [
+    "ail",
+    "specification",
+    "spec",
+    "markdown",
+    "agents"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "ail",
+        "aliases": [
+          "AIL",
+          "ail"
+        ],
+        "extensions": [
+          ".ail"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icon.png",
+          "dark": "./icon.png"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "ail",
+        "scopeName": "source.ail",
+        "path": "./syntaxes/ail.tmLanguage.json"
+      },
+      {
+        "scopeName": "markdown.ail.codeblock",
+        "path": "./syntaxes/ail.markdown.tmLanguage.json",
+        "injectTo": [
+          "text.html.markdown"
+        ],
+        "embeddedLanguages": {
+          "meta.embedded.block.ail": "ail"
+        }
+      }
+    ]
+  }
+}

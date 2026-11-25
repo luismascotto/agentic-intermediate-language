@@ -11,6 +11,7 @@ node CodeBlock : view   level: experience
     is a region named with the given label, so screen readers can announce it
     long lines wrap inside the panel at every width, so every word and every highlight stays visible; nothing is cut off and the panel never scrolls sideways
     a wrapped line continues 4 characters further in than the first non-space character of its own line, so the indentation stays readable
+    a line never breaks between its leading spaces and its first word, so no row is left with only spaces on it
     every occurrence of each highlight phrase is marked, in every line
     a caption, when given, is shown under the block
     Scenario: shown exactly
@@ -28,8 +29,8 @@ node CodeBlock : view   level: experience
       And the wrapped part starts 8 characters from the left edge, 4 further in than the word "because"
   look
     layout   stack(v, gap: space.2, align: stretch) [ block, caption ]
-    block    a pre element: background color.code, text color.code.text, font.mono at font.code, line-height 1.6, pad space.4, radius.md, margin 0, white-space pre-wrap, overflow-wrap anywhere
-    line     each line is a span with display block; for a line that starts with n spaces: padding-left (n + 4)ch and text-indent -(n + 4)ch, so its first row starts at the left edge and its wrapped rows start 4ch further in than its first non-space character; an empty line is a span holding one space, so it keeps its height
+    block    a pre element: background color.code, text color.code.text, font.mono at font.code, line-height 1.6, pad clamp(12px, 3vw, 16px), radius.md, margin 0, white-space pre-wrap, overflow-wrap anywhere
+    line     each line is a span with display block; for a line that starts with n spaces: padding-left (n + 4)ch and text-indent -(n + 4)ch, so its first row starts at the left edge and its wrapped rows start 4ch further in than its first non-space character; an empty line is a span holding one space, so it keeps its height; the leading spaces and the first word of every line are together in one span with word-break break-all, so a first word too long for the row is broken on the first row and never leaves that row empty
     edge     when edge is given, a 4px solid left border in that color token
     mark     a mark element: background color.thread.soft, color color.thread, a 1px solid color.thread bottom border, pad 0 2px, radius 2px
     caption  font.mono at font.tiny, color.text.muted, overflow-wrap anywhere
@@ -59,7 +60,7 @@ node CopyCommand : flow   level: experience
   look
     row      stack(h, gap: space.3, align: center, justify: between) with background color.code, radius.md, pad space.3, min-width 0
     command  a code element: font.mono at font.code, line-height 1.5, color.code.text, white-space pre-wrap, overflow-wrap anywhere, flex 1 1 auto, min-width 0
-    button   font.sans at font.tiny, weight 600, color color.code.text, background transparent, a 1px solid color.code.border border, radius.sm, pad space.2 space.3, min-height 36px, cursor pointer, flex 0 0 auto
+    button   font.sans at font.tiny, weight 600, color color.code.text, background transparent, a 1px solid color.code.border border, radius.sm, pad space.2 space.3, min-height 44px, cursor pointer, flex 0 0 auto
   copy
     copy.idle   "Copy"
     copy.done   "Copied"

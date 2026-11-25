@@ -1,0 +1,29 @@
+{
+  "name": "ail",
+  "description": "Agentic Intermediate Language: review a recursive why/what/how spec, and let agents compile it into verified code.",
+  "author": {
+    "name": "ffMathy"
+  },
+  "homepage": "https://ffmathy.github.io/agentic-intermediate-language/",
+  "repository": "https://github.com/ffMathy/agentic-intermediate-language",
+  "keywords": [
+    "specification",
+    "intermediate-language",
+    "codegen",
+    "review"
+  ],
+  "skills": "skills/",
+  "commands": "commands/",
+  "hooks": "hooks/copilot.json",
+  "mcpServers": {
+    "ail": {
+      "command": "bun",
+      "args": [
+        "${PLUGIN_ROOT}/src/mcp.ts"
+      ],
+      "env": {
+        "AIL_HOST": "copilot"
+      }
+    }
+  }
+}

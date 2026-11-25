@@ -1,0 +1,13 @@
+{
+  "node": "WalkPicture",
+  "shots": [
+    {
+      "test": "a stale chapter",
+      "file": "01-a-stale-chapter.png"
+    },
+    {
+      "test": "nodes with no spec yet",
+      "file": "02-nodes-with-no-spec-yet.png"
+    }
+  ]
+}

@@ -40,7 +40,7 @@ node Section : view   level: experience
       Given the id "journey" and the child text "Hello"
       Then a region element with the id "journey" contains "Hello"
   look
-    band     a section element, full width, box-sizing border-box; pad space.16 above and below, space.4 left and right
+    band     a section element, full width, box-sizing border-box; pad clamp(40px, 10vw, 64px) above and below, space.4 left and right
     tone     background color.surface when tone is "plain", color.surface.raised when tone is "raised"
     column   a div with max-width width.content, margin 0 auto, width 100%; stack(v, gap: space.8, align: stretch) [ children ]
     anchor   scroll-margin-top space.4 on the band

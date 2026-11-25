@@ -18,8 +18,12 @@
       "file": "04-opened-from-a-link.png"
     },
     {
+      "test": "the language is defined",
+      "file": "05-the-language-is-defined.png"
+    },
+    {
       "test": "following the same link twice",
-      "file": "05-following-the-same-link-twice.png"
+      "file": "06-following-the-same-link-twice.png"
     }
   ]
 }

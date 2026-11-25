@@ -1,0 +1,9 @@
+{
+  "node": "WatchSection",
+  "shots": [
+    {
+      "test": "the section",
+      "file": "01-the-section.png"
+    }
+  ]
+}

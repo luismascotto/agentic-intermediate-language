@@ -1,0 +1,13 @@
+{
+  "node": "WalkInset",
+  "shots": [
+    {
+      "test": "a card",
+      "file": "01-a-card.png"
+    },
+    {
+      "test": "a screenshot",
+      "file": "02-a-screenshot.png"
+    }
+  ]
+}

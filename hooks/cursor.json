@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      { "type": "command", "matcher": "Write", "command": "bun ./src/cli.ts hook pre --for cursor" }
+    ],
+    "postToolUse": [
+      { "type": "command", "matcher": "Write", "command": "bun ./src/cli.ts hook post --for cursor" }
+    ]
+  }
+}

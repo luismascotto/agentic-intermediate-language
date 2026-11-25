@@ -1,0 +1,13 @@
+{
+  "node": "WalkTimeline",
+  "shots": [
+    {
+      "test": "the chapters",
+      "file": "01-the-chapters.png"
+    },
+    {
+      "test": "picking a chapter",
+      "file": "02-picking-a-chapter.png"
+    }
+  ]
+}

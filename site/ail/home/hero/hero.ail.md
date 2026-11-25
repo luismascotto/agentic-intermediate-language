@@ -18,12 +18,12 @@ node Hero : view   level: experience
     band      Section, tone plain
     grid      a div: display grid, grid-template-columns repeat(auto-fit, minmax(min(320px, 100%), 1fr)), gap space.8, align-items center
     text      stack(v, gap: space.4, align: start) [ eyebrow, headline, subhead, links, note ]
-    eyebrow   a p: font.tiny, weight 700, letter-spacing 0.08em, color color.stop.text, background color.accent.soft, a 1px solid color.border border, radius.pill, pad space.1 space.3, margin 0
+    eyebrow   a p: font.tiny, weight 700, letter-spacing 0.08em, color color.stop.text, background color.accent.soft, a 1px solid color.border border, radius.lg, pad space.1 space.3, margin 0
     headline  an h1: font.display at font.hero, weight 800, line-height 1.05, letter-spacing -0.02em, color.text, margin 0, max-width 16ch
     subhead   a p: font.lead, line-height 1.6, color.text.muted, max-width 52ch, margin 0
     links     stack(h, gap: space.3, align: center, wrap: true) [ follow, play, github ]
-    follow    a link: background color.accent, color color.on.accent, a 2px solid color.accent border, radius.pill, pad space.3 space.6, weight 700, no underline
-    play      a link: background transparent, color color.text, a 2px solid color.text border, radius.pill, pad space.3 space.6, weight 700, no underline
+    follow    a link: background color.accent, color color.on.accent, a 2px solid color.accent border, radius.pill, pad space.3 space.6, weight 700, no underline, flex 1 1 auto, white-space nowrap, text-align center, box-sizing border-box (each fits its text on one line; on a phone each fills its own row)
+    play      a link: background transparent, color color.text, a 2px solid color.text border, radius.pill, pad space.3 space.6, weight 700, no underline, flex 1 1 auto, white-space nowrap, text-align center, box-sizing border-box (each fits its text on one line; on a phone each fills its own row)
     github    a link: color color.text, weight 600, pad space.3 0, no underline
     note      a p: font.small, color.text.muted, margin 0
     picture   HeroFigure, centered in its column
@@ -61,12 +61,12 @@ node HeroFigure : view   level: experience
     saying    text at 160, 62, text-anchor middle, font.display, font-size 19, weight 700, fill color.text
     strata    four rects x 40 width 240 height 52 rx 8 at y 96, 154, 212 and 270, filled color.level.product, color.level.experience, color.level.system and color.level.specialist
     names     text at x 52, y = the stratum's y + 31, font-size 13, weight 600, fill color.on.accent
-    readers   text at x 268, y = the stratum's y + 31, text-anchor end, font-size 11, fill color.on.accent, opacity 0.85
+    readers   text at x 268, y = the stratum's y + 31, text-anchor end, font-size 12, fill color.on.accent, opacity 0.85
     arrow     line 28,104 to 28,312 and path "M23 304 L28 314 L33 304", stroke color.text.muted, stroke-width 1.5, fill none
-    precise   text at 14, 209, rotated -90 around that point, text-anchor middle, dominant-baseline middle, font-size 11, fill color.text.muted
+    precise   text at 14, 209, rotated -90 around that point, text-anchor middle, dominant-baseline middle, font-size 12, fill color.text.muted
     thread    line 160,82 to 160,406, stroke color.thread, stroke-width 3, stroke-linecap round, stroke-dasharray 400, animation "ail-thread 2.4s ease-out 1 both"; drawn after the strata
     code      rect x 40 y 330 width 240 height 64 rx 8, fill color.code, drawn after the thread
-    lines     three mono texts, font-size 11, fill color.code.text: line 1 at 54, 352; line 2 at 66, 368; line 3 at 54, 384
+    lines     three mono texts, font-size 12, fill color.code.text: line 1 at 54, 352; line 2 at 66, 368; line 3 at 54, 384
     board     MiniBoard at x 118, y 406, cell 28, marks "X___O____"
   copy
     hero.figure.label   "One sentence sinks through four levels of spec and comes out as code and a game board"

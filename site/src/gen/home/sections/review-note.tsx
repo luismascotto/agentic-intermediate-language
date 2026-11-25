@@ -11,7 +11,7 @@ export function ReviewNote() {
       style={{
         background: "var(--color-surface-raised)",
         borderRadius: "var(--radius-lg)",
-        padding: "var(--space-6)",
+        padding: "clamp(16px, 4vw, 24px)",
         minWidth: 0,
       }}
     >

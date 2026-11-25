@@ -9,16 +9,17 @@ export function CopyCommand({ command }: { command: string }) {
     if (!copied) {
       return;
     }
-    const id = setTimeout(() => {
+    const timer = setTimeout(() => {
       setCopied(false);
     }, 1500);
     return () => {
-      clearTimeout(id);
+      clearTimeout(timer);
     };
   }, [copied]);
 
   const press = () => {
-    const clipboard = typeof navigator === "undefined" ? undefined : navigator.clipboard;
+    const clipboard =
+      typeof navigator === "undefined" ? undefined : navigator.clipboard;
     if (!clipboard) {
       return;
     }
@@ -70,7 +71,7 @@ export function CopyCommand({ command }: { command: string }) {
           border: "1px solid var(--color-code-border)",
           borderRadius: "var(--radius-sm)",
           padding: "var(--space-2) var(--space-3)",
-          minHeight: "36px",
+          minHeight: "44px",
           cursor: "pointer",
           flex: "0 0 auto",
         }}

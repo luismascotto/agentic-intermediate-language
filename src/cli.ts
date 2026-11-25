@@ -3,7 +3,7 @@
 import { adopt, formatAdopt } from "./adopt.ts";
 import { build } from "./build.ts";
 import { getProvider, modelUnavailable, resolveModels } from "./providers/index.ts";
-import { postHook, preHook } from "./hooks.ts";
+import { AGENTS, agentOf, postHook, preHook, respond, type Agent } from "./hooks.ts";
 import { changedNodes } from "./lens.ts";
 import { loadProject, type Project } from "./project.ts";
 import { changedScreens, renderShots, takeShots } from "./shots.ts";
@@ -15,9 +15,11 @@ const HELP = `ail — write the spec, let agents build the code.
                         sound, the code is built from it, every check passes, a model
                         has compared each screen with its look, and, with run.app set,
                         the app behaves as the spec says end to end. With nothing to compile it
-                        only checks, so CI runs it too. Uses Claude Code's login (a Claude
-                        subscription works) unless ANTHROPIC_API_KEY is set.
-                        --model M     claude-code[:model], anthropic:<id>, openai:<id>, command:<cli>
+                        only checks, so CI runs it too. Without ANTHROPIC_API_KEY it uses the
+                        login of Claude Code, the Cursor CLI or the Copilot CLI, whichever is
+                        installed (a Claude, Cursor or Copilot subscription works).
+                        --model M     claude-code[:model], cursor[:model], copilot[:model],
+                                      anthropic:<id>, openai:<id>, command:<cli>
                         --force       rebuild even if nothing changed
                         --jobs N      nodes compiled at once (default 4)
                         --no-look     don't have a model compare screens with their look
@@ -33,7 +35,8 @@ const HELP = `ail — write the spec, let agents build the code.
                                       of the changed nodes and the nodes that use them
 
 Run it anywhere inside a project that has an ail.config.json.
-For the Claude Code plugin: ail mcp, ail hook pre|post.`;
+For the agent plugins (Claude Code, Cursor, GitHub Copilot):
+  ail mcp, ail hook pre|post [--for claude|cursor|copilot].`;
 
 interface Args { _: string[]; flags: Record<string, string[]> }
 
@@ -68,10 +71,14 @@ async function main(argv: string[]): Promise<number> {
   // plumbing that must not load a project eagerly
   if (cmd === "hook") {
     const payload = JSON.parse((await Bun.stdin.text()) || "{}");
-    const r = rest[0] === "pre" ? preHook(payload) : rest[0] === "post" ? postHook(payload) : null;
-    if (!r) throw new Error("usage: ail hook pre|post");
-    if (r.message) console.error(r.message);
-    return r.code;
+    const kind = rest[0];
+    if (kind !== "pre" && kind !== "post") throw new Error("usage: ail hook pre|post [--for claude|cursor|copilot]");
+    const agent = (flag(a, "for") ?? agentOf(payload)) as Agent;
+    if (!AGENTS.includes(agent)) throw new Error(`unknown agent "${agent}" (use ${AGENTS.join(", ")})`);
+    const out = respond(kind, kind === "pre" ? preHook(payload) : postHook(payload), agent);
+    if (out.stdout) console.log(out.stdout);
+    if (out.stderr) console.error(out.stderr);
+    return out.exit;
   }
   if (cmd === "mcp") { await import("./mcp.ts").then((m) => m.serve(flag(a, "root"))); return 0; }
 

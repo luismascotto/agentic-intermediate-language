@@ -1,4 +1,4 @@
-// ail-derived-from: Readers@17242cab3e2084df
+// ail-derived-from: Readers@5695d6bb7e3b4be4
 import { afterEach, expect, test } from "bun:test";
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { Readers } from "../../../src/gen/home/readers/readers";
@@ -17,13 +17,10 @@ test("the first reader", () => {
 
 test("picking another reader", () => {
   render(<Readers />);
-  fireEvent.click(screen.getByRole("tab", { name: "Specialist" }));
-  expect(
-    screen.getByRole("tab", { name: "Specialist" }).getAttribute("aria-selected"),
-  ).toBe("true");
-  expect(
-    screen.getByRole("tab", { name: "Stakeholder" }).getAttribute("aria-selected"),
-  ).not.toBe("true");
+  const specialist = screen.getByRole("tab", { name: "Specialist" });
+  fireEvent.click(specialist);
+  expect(screen.getByRole("tab", { name: "Specialist" }).getAttribute("aria-selected")).toBe("true");
+  expect(screen.getByRole("tab", { name: "Stakeholder" }).getAttribute("aria-selected")).toBe("false");
   const panel = screen.getByRole("tabpanel");
   expect(panel.textContent ?? "").toContain("SPECIALIST LEVEL");
 });

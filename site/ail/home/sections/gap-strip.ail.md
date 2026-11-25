@@ -17,7 +17,7 @@ node GapStrip : view   level: experience
     band      Section, tone raised
     heading   SectionHeading with eyebrow from gap.eyebrow, text from gap.heading
     cards     a div: display grid, grid-template-columns repeat(auto-fit, minmax(min(260px, 100%), 1fr)), gap space.4
-    card      background color.surface, a 1px solid color.border border, radius.lg, pad space.6; stack(v, gap: space.3, align: start) [ icon, title, body ]
+    card      background color.surface, a 1px solid color.border border, radius.lg, pad clamp(16px, 4vw, 24px); stack(v, gap: space.3, align: start) [ icon, title, body ]
     third     the third card is dark like the code panels: background color.code, a 1px solid color.code border; its title color color.thread, its body color color.code.text, and a tip under its body in color color.code.muted
     title     an h3: font.lead, weight 700, line-height 1.3, color.text, margin 0
     body      a p: font.body, line-height 1.6, color.text.muted, margin 0

@@ -59,7 +59,7 @@ node SpecialistFigure : view   level: experience
     children  MiniBoard at x 34, 118 and 202, y 80, cell 8, with marks "X_X_O____", "XX__O____" and "X___O___X"
     leaves    circles r 5 at y 150 and x 22, 46, 70, 106, 130, 154, 190, 214, 238; fill color.pass for the 2nd, 4th and 8th, color.code.muted for the others
     legend    circles r 5 at cx 270, cy 40, 64 and 88, filled color.pass, color.code.muted and color.player.x; the third crossed by line 262,88 to 278,88, stroke color.text, stroke-width 1.5; texts at x 282, y 44, 68 and 92, font-size 12, fill color.text
-    facts     mono text at 180, 196, text-anchor middle, font-size 11, fill color.text.muted
+    facts     mono text at 180, 196, text-anchor middle, font-size 12, fill color.text.muted
   copy
     specialist.figure.label  "A tree of possible games: every ending is an O win or a draw, never an X win"
     specialist.figure.owins  "O wins"

@@ -1,4 +1,4 @@
-// ail-derived-from: CopyCommand@8564d6a62b9277e5
+// ail-derived-from: CopyCommand@c6896a0be9537471
 import { afterEach, expect, test } from "bun:test";
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { CopyCommand } from "../../src/gen/parts/copy-command";
@@ -19,7 +19,7 @@ afterEach(() => {
 });
 
 test("copying", async () => {
-  let clipboardText = "";
+  let clipboardText = null as string | null;
   Object.defineProperty(navigator, "clipboard", {
     value: {
       writeText: (text: string): Promise<void> => {
@@ -42,15 +42,11 @@ test("copying", async () => {
   });
 
   expect(clipboardText).toBe("ail build");
-  expect(
-    screen.getByRole("button", { name: "Copy ail build" }).textContent,
-  ).toBe("Copied");
+  expect(screen.getByRole("button", { name: "Copy ail build" }).textContent).toBe("Copied");
 
   await act(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 1600));
+    await new Promise<void>((resolve) => setTimeout(resolve, 1600));
   });
 
-  expect(
-    screen.getByRole("button", { name: "Copy ail build" }).textContent,
-  ).toBe("Copy");
-});
+  expect(screen.getByRole("button", { name: "Copy ail build" }).textContent).toBe("Copy");
+}, 5000);

@@ -1,25 +1,21 @@
 import { specProjects } from "../../../spec";
 import { Stack } from "../../../parts/stack";
 
-const TESTS = ["winning", "the computer answers"];
+const tests = ["winning", "the computer answers"];
 
-/** two screenshots of the demo's play screen, taken at the end of its checks "winning" and "the computer answers", side by side when there is room, each with a check mark and the check's name under it */
+/** "two screenshots of the demo's play screen, taken at the end of its checks "winning" and "the computer answers", side by side when there is room, each with a check mark and the check's name under it" */
 export function ProofScreens() {
   const project = specProjects.find((p) => p.key === "tictactoe");
-  const shots = project
-    ? TESTS.flatMap((test) => {
-        const shot = project.shots.find(
-          (s) => s.node === "PlayAGame" && s.test === test,
-        );
-        return shot ? [shot] : [];
-      })
-    : [];
+  const shots = tests.flatMap((test) => {
+    const shot = project?.shots.find((s) => s.node === "PlayAGame" && s.test === test);
+    return shot ? [shot] : [];
+  });
   return (
     <Stack dir="v" gap="space.3" align="stretch">
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(min(160px, 100%), 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(128px, 100%), 1fr))",
           gap: "var(--space-3)",
           width: "100%",
         }}
@@ -54,9 +50,7 @@ export function ProofScreens() {
                 textAlign: "center",
               }}
             >
-              <span style={{ color: "var(--color-pass)", fontWeight: 700 }}>
-                {"✓"}
-              </span>
+              <span style={{ color: "var(--color-pass)", fontWeight: 700 }}>✓</span>
               {" "}
               {`“${shot.test}”`}
             </figcaption>
@@ -72,11 +66,8 @@ export function ProofScreens() {
           overflowWrap: "anywhere",
         }}
       >
-        {"Committed with the checks, in"}
-        {" "}
-        <code style={{ fontFamily: "var(--font-mono)" }}>
-          {"examples/tictactoe/checks/shots/"}
-        </code>
+        Committed with the checks, in{" "}
+        <code style={{ fontFamily: "var(--font-mono)" }}>examples/tictactoe/checks/shots/</code>
       </p>
     </Stack>
   );

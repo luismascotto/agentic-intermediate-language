@@ -1,0 +1,9 @@
+{
+  "node": "WalkCaption",
+  "shots": [
+    {
+      "test": "a branch chapter",
+      "file": "01-a-branch-chapter.png"
+    }
+  ]
+}

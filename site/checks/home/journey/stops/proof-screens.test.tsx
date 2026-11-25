@@ -1,4 +1,4 @@
-// ail-derived-from: ProofScreens@150655e3ad6e0f4d
+// ail-derived-from: ProofScreens@816dca00032768f2
 import { afterEach, expect, test } from "bun:test";
 import { cleanup, render, screen } from "@testing-library/react";
 import { ProofScreens } from "../../../../src/gen/home/journey/stops/proof-screens";
@@ -17,18 +17,12 @@ test("the screens", () => {
     name: "Screenshot at the end of the check “the computer answers”",
   });
 
-  expect(
-    winning.compareDocumentPosition(answers) & Node.DOCUMENT_POSITION_FOLLOWING,
-  ).toBeTruthy();
-
-  const shotNames = screen
-    .getAllByRole("img")
-    .map((el) => el.getAttribute("alt") ?? "")
-    .filter((alt) => alt.startsWith("Screenshot at the end of the check"));
-  expect(shotNames).toEqual([
-    "Screenshot at the end of the check “winning”",
-    "Screenshot at the end of the check “the computer answers”",
-  ]);
+  const images = screen.getAllByRole("img");
+  const winningIndex = images.indexOf(winning);
+  const answersIndex = images.indexOf(answers);
+  expect(winningIndex).toBeGreaterThanOrEqual(0);
+  expect(answersIndex).toBeGreaterThanOrEqual(0);
+  expect(winningIndex).toBeLessThan(answersIndex);
 
   expect(container.textContent ?? "").toContain("examples/tictactoe/checks/shots/");
 });

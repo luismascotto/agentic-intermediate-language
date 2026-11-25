@@ -1,4 +1,4 @@
-// ail-derived-from: SystemFigure@c85e3a19407a3f1c
+// ail-derived-from: SystemFigure@5f445eb750202046
 import { afterEach, expect, test } from "bun:test";
 import { cleanup, render, screen } from "@testing-library/react";
 import { SystemFigure } from "../../../../src/gen/home/journey/stops/system-figure";

@@ -1,4 +1,4 @@
-// ail-derived-from: BuildFigure@75b7c94e3344c25f
+// ail-derived-from: BuildFigure@c35ada4ab5baac2c
 import { afterEach, expect, test } from "bun:test";
 import { cleanup, render, screen } from "@testing-library/react";
 import { BuildFigure } from "../../../../src/gen/home/journey/stops/build-figure";
@@ -9,11 +9,11 @@ afterEach(() => {
 
 test("the picture", () => {
   render(<BuildFigure />);
-  const picture = screen.getByRole("img", {
+  const image = screen.getByRole("img", {
     name: "The ComputerPlayer node goes into a compiler agent and comes out as a 69-line file; a reviewer reads the 27-line node",
   });
-  expect(picture).toBeTruthy();
-  const text = picture.textContent ?? "";
+  expect(image).toBeTruthy();
+  const text = image.textContent ?? "";
   expect(text).toContain("compiler");
   expect(text).toContain("agent");
   expect(text).toContain("27 lines");

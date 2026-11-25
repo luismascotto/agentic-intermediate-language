@@ -1,0 +1,13 @@
+{
+  "node": "WalkControls",
+  "shots": [
+    {
+      "test": "on the first chapter",
+      "file": "01-on-the-first-chapter.png"
+    },
+    {
+      "test": "moving on",
+      "file": "02-moving-on.png"
+    }
+  ]
+}

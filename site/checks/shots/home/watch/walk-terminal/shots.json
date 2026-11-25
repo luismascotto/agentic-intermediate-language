@@ -1,0 +1,17 @@
+{
+  "node": "WalkTerminal",
+  "shots": [
+    {
+      "test": "lines kept exactly",
+      "file": "01-lines-kept-exactly.png"
+    },
+    {
+      "test": "the caret",
+      "file": "02-the-caret.png"
+    },
+    {
+      "test": "nothing printed",
+      "file": "03-nothing-printed.png"
+    }
+  ]
+}

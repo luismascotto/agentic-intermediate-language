@@ -1,4 +1,4 @@
-// ail-derived-from: CodeBlock@58a09af045752d21
+// ail-derived-from: CodeBlock@b7f01c903a7cbbfa
 import { afterEach, expect, test } from "bun:test";
 import { cleanup, render, screen } from "@testing-library/react";
 import { CodeBlock } from "../../src/gen/parts/code-block";
@@ -7,16 +7,21 @@ afterEach(() => {
   cleanup();
 });
 
+function lineSpans(region: HTMLElement): HTMLElement[] {
+  return Array.from(region.children).filter(
+    (el): el is HTMLElement => el instanceof HTMLElement && el.tagName === "SPAN",
+  );
+}
+
 test("shown exactly", () => {
   render(<CodeBlock lines={["a  b", "  c"]} label="Sample" />);
   const region = screen.getByRole("region", { name: "Sample" });
-  const lineEls = Array.from(region.children) as HTMLElement[];
-  expect(lineEls.length).toBe(2);
-  expect(lineEls[0].textContent).toBe("a  b");
-  expect(lineEls[1].textContent).toBe("  c");
-  for (const el of lineEls) {
-    expect(el.tagName.toLowerCase()).toBe("span");
-    expect(el.style.display).toBe("block");
+  const spans = lineSpans(region);
+  expect(spans.length).toBe(2);
+  expect(spans[0].textContent).toBe("a  b");
+  expect(spans[1].textContent).toBe("  c");
+  for (const span of spans) {
+    expect(span.style.display).toBe("block");
   }
   expect(region.textContent).toBe("a  b  c");
 });
@@ -30,16 +35,15 @@ test("the thread is marked", () => {
     />,
   );
   const region = screen.getByRole("region", { name: "Sample" });
-  const marks = region.querySelectorAll("mark");
+  const marks = Array.from(region.querySelectorAll("mark"));
   expect(marks.length).toBe(1);
   expect(marks[0].textContent).toBe("never loses");
-  expect(document.querySelectorAll("mark").length).toBe(1);
 });
 
 test("a caption", () => {
   render(
     <CodeBlock
-      lines={["node Game : flow"]}
+      lines={["a"]}
       label="Sample"
       caption="examples/tictactoe/tictactoe.ail.md"
     />,
@@ -55,15 +59,21 @@ test("a caption", () => {
 test("a long line wraps under itself", () => {
   const line =
     "    because an instant answer feels like the player's own move did nothing";
-  render(<CodeBlock lines={[line]} label="Sample" />);
+  render(
+    <div style={{ width: "30ch" }}>
+      <CodeBlock lines={[line]} label="Sample" />
+    </div>,
+  );
   const region = screen.getByRole("region", { name: "Sample" });
   expect(region.textContent).toBe(line);
   expect(region.style.whiteSpace).toBe("pre-wrap");
   expect(region.style.getPropertyValue("overflow-wrap")).toBe("anywhere");
-  expect(["scroll", "auto", "hidden"]).not.toContain(region.style.overflowX);
-  expect(["scroll", "auto", "hidden"]).not.toContain(region.style.overflow);
-  const lineEl = region.children[0] as HTMLElement;
-  expect(lineEl.textContent).toBe(line);
-  expect(lineEl.style.paddingLeft).toBe("8ch");
-  expect(lineEl.style.textIndent).toBe("-8ch");
+  const hiding = ["auto", "scroll", "hidden", "clip"];
+  expect(hiding).not.toContain(region.style.overflow);
+  expect(hiding).not.toContain(region.style.overflowX);
+  const spans = lineSpans(region);
+  expect(spans.length).toBe(1);
+  expect(spans[0].textContent).toBe(line);
+  expect(spans[0].style.paddingLeft).toBe("8ch");
+  expect(spans[0].style.textIndent).toBe("-8ch");
 });

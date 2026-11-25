@@ -1,0 +1,29 @@
+{
+  "node": "WalkthroughPlayer",
+  "shots": [
+    {
+      "test": "it opens paused",
+      "file": "01-it-opens-paused.png"
+    },
+    {
+      "test": "the other walkthrough",
+      "file": "02-the-other-walkthrough.png"
+    },
+    {
+      "test": "picking a chapter",
+      "file": "03-picking-a-chapter.png"
+    },
+    {
+      "test": "next and previous",
+      "file": "04-next-and-previous.png"
+    },
+    {
+      "test": "arrow keys",
+      "file": "05-arrow-keys.png"
+    },
+    {
+      "test": "playing",
+      "file": "06-playing.png"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "AIL",
+  "scopeName": "source.ail",
+  "fileTypes": ["ail"],
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#statement" },
+    { "include": "#section" },
+    { "include": "#body" }
+  ],
+  "repository": {
+    "comment": {
+      "patterns": [
+        { "name": "comment.line.semicolon.ail", "match": "(^|(?<=\\s));.*$" }
+      ]
+    },
+    "string": {
+      "name": "string.quoted.double.ail",
+      "begin": "\"",
+      "end": "\"|$",
+      "patterns": [
+        { "name": "constant.character.escape.ail", "match": "\\\\." },
+        { "name": "variable.other.placeholder.ail", "match": "\\{[A-Za-z_][\\w.]*\\}" }
+      ]
+    },
+    "statement": {
+      "patterns": [
+        {
+          "match": "^(node)\\s+([A-Za-z_]\\w*)(?:\\s*(:)\\s*([\\w-]+))?",
+          "captures": {
+            "1": { "name": "keyword.control.statement.ail" },
+            "2": { "name": "entity.name.type.node.ail" },
+            "3": { "name": "punctuation.separator.kind.ail" },
+            "4": { "name": "storage.type.kind.ail" }
+          }
+        },
+        { "match": "^(target|catalog|glossary)\\b", "captures": { "1": { "name": "keyword.control.statement.ail" } } },
+        {
+          "match": "\\b(level)(:)\\s*(product|experience|system|specialist|\\w+)",
+          "captures": {
+            "1": { "name": "variable.parameter.level.ail" },
+            "2": { "name": "punctuation.separator.ail" },
+            "3": { "name": "constant.language.level.ail" }
+          }
+        },
+        { "name": "entity.other.attribute-name.tag.ail", "match": "(?<=\\s)@[\\w.-]+" }
+      ]
+    },
+    "section": {
+      "patterns": [
+        {
+          "match": "^\\s+(why|what|how|look|copy|binds|free|uses|children|verify|entry|sources)(?=\\s|$)",
+          "captures": { "1": { "name": "keyword.other.section.ail" } }
+        },
+        {
+          "match": "^\\s+(examples|probes)\\s*$",
+          "captures": { "1": { "name": "keyword.other.label.ail" } }
+        },
+        {
+          "match": "^\\s+(tokens|term)(?=\\s|$)",
+          "captures": { "1": { "name": "keyword.other.section.ail" } }
+        },
+        {
+          "match": "^\\s+(decide|because|rejected)(?=\\s)",
+          "captures": { "1": { "name": "keyword.other.decision.ail" } }
+        },
+        {
+          "match": "^\\s+(type)\\s+([A-Z]\\w*)",
+          "captures": { "1": { "name": "storage.type.ail" }, "2": { "name": "entity.name.type.ail" } }
+        },
+        {
+          "match": "^\\s+(Scenario)(:)",
+          "captures": { "1": { "name": "keyword.control.scenario.ail" }, "2": { "name": "punctuation.separator.ail" } }
+        },
+        {
+          "match": "^\\s+(Given|When|Then|And|But)\\b",
+          "captures": { "1": { "name": "keyword.control.step.ail" } }
+        }
+      ]
+    },
+    "body": {
+      "patterns": [
+        { "include": "#comment" },
+        { "include": "#string" },
+        {
+          "match": "(<-)\\s*([A-Za-z_]\\w*)",
+          "captures": { "1": { "name": "keyword.operator.why.ail" }, "2": { "name": "entity.name.type.reference.ail" } }
+        },
+        {
+          "match": "(refined-by)(:)((?:\\s*,?\\s*[A-Z]\\w*)+)",
+          "captures": {
+            "1": { "name": "keyword.other.refined-by.ail" },
+            "2": { "name": "punctuation.separator.ail" },
+            "3": { "name": "entity.name.type.reference.ail" }
+          }
+        },
+        { "match": "\\b(plain|formal)(?=\\s)", "captures": { "1": { "name": "keyword.other.glossary.ail" } } },
+        { "name": "keyword.operator.arrow.ail", "match": "=>|->|→" },
+        { "name": "keyword.operator.word.ail", "match": "\\b(is not|is|and|or|not|where|starting at)\\b" },
+        { "name": "support.type.ail", "match": "\\b(text|number|integer|boolean|duration|time|bytes|list of|set of|map of|later|a rendered view)\\b(?!\\s*\\??:)" },
+        { "name": "constant.language.ail", "match": "\\b(nothing|true|false)\\b" },
+        { "name": "constant.numeric.ail", "match": "(?<![\\w.])-?\\d+(\\.\\d+)?(\\s?(ms|s|min|px|kr|%))?\\b" },
+        { "name": "variable.other.token.ail", "match": "\\b[a-z][a-z0-9]*(\\.[a-z0-9]+)+\\b" },
+        { "name": "entity.name.function.ail", "match": "\\b[a-z_]\\w*(?=\\()" },
+        { "name": "entity.name.type.ail", "match": "\\b[A-Z][a-z0-9]+(?:[A-Z][a-z0-9]*)+\\b" }
+      ]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "comments": { "lineComment": ";" },
+  "brackets": [["{", "}"], ["[", "]"], ["(", ")"]],
+  "autoClosingPairs": [
+    { "open": "{", "close": "}" },
+    { "open": "[", "close": "]" },
+    { "open": "(", "close": ")" },
+    { "open": "\"", "close": "\"", "notIn": ["string"] }
+  ],
+  "surroundingPairs": [["{", "}"], ["[", "]"], ["(", ")"], ["\"", "\""]],
+  "indentationRules": {
+    "increaseIndentPattern": "^(node\\b.*|target|catalog|glossary|\\s+(what|how|look|copy|binds|verify|examples|probes|sources))\\s*$",
+    "decreaseIndentPattern": "^\\s*$"
+  }
+}

@@ -2,7 +2,7 @@ import { Section } from "../../parts/section";
 import { Stack } from "../../parts/stack";
 import { HeroFigure } from "./hero-figure";
 
-/** an eyebrow, the page's only level 1 heading, a short explanation, three links and a note, beside a picture of the sentence sinking through the levels */
+/** "an eyebrow, the page's only level 1 heading, a short explanation, three links and a note, beside a picture of the sentence sinking through the levels" */
 export function Hero() {
   return (
     <Section tone="plain">
@@ -23,7 +23,7 @@ export function Hero() {
               color: "var(--color-stop-text)",
               background: "var(--color-accent-soft)",
               border: "1px solid var(--color-border)",
-              borderRadius: "var(--radius-pill)",
+              borderRadius: "var(--radius-lg)",
               padding: "var(--space-1) var(--space-3)",
               margin: 0,
             }}
@@ -66,6 +66,10 @@ export function Hero() {
                 padding: "var(--space-3) var(--space-6)",
                 fontWeight: 700,
                 textDecoration: "none",
+                flex: "1 1 auto",
+                whiteSpace: "nowrap",
+                textAlign: "center",
+                boxSizing: "border-box",
               }}
             >
               Follow the sentence ↓
@@ -80,6 +84,10 @@ export function Hero() {
                 padding: "var(--space-3) var(--space-6)",
                 fontWeight: 700,
                 textDecoration: "none",
+                flex: "1 1 auto",
+                whiteSpace: "nowrap",
+                textAlign: "center",
+                boxSizing: "border-box",
               }}
             >
               Try to beat the computer ↓

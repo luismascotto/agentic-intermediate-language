@@ -73,8 +73,11 @@ export function SpecEditor({ text, path, label }: SpecEditorProps) {
     <div
       style={{
         width: "100%",
+        maxWidth: "100%",
+        minWidth: 0,
         height: "100%",
         minHeight: "320px",
+        overflow: "hidden",
         background: "var(--color-code)",
       }}
     >
@@ -92,6 +95,10 @@ export function SpecEditor({ text, path, label }: SpecEditorProps) {
           minimap: { enabled: false },
           wordWrap: "on",
           lineNumbers: "on",
+          lineNumbersMinChars: 3,
+          glyphMargin: false,
+          folding: false,
+          lineDecorationsWidth: 8,
           scrollBeyondLastLine: false,
           fontSize: 13,
           fontFamily: "Inconsolata, ui-monospace, monospace",

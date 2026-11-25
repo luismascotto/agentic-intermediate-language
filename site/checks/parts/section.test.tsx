@@ -1,4 +1,4 @@
-// ail-derived-from: Section@855db5e5409ad31c
+// ail-derived-from: Section@833319989183260c
 import { afterEach, expect, test } from "bun:test";
 import { cleanup, render } from "@testing-library/react";
 import { Section } from "../../src/gen/parts/section";
@@ -8,12 +8,12 @@ afterEach(() => {
 });
 
 test("an anchored band", () => {
-  const { container } = render(
+  render(
     <Section id="journey" tone="plain">
       Hello
     </Section>,
   );
-  const band = container.querySelector("#journey");
+  const band = document.getElementById("journey");
   expect(band).not.toBeNull();
   expect(band?.tagName.toLowerCase()).toBe("section");
   expect(band?.textContent ?? "").toContain("Hello");

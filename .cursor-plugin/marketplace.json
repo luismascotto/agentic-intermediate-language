@@ -1,0 +1,16 @@
+{
+  "name": "agentic-intermediate-language",
+  "owner": {
+    "name": "ffMathy"
+  },
+  "metadata": {
+    "description": "Spec-first development with the Agentic Intermediate Language."
+  },
+  "plugins": [
+    {
+      "name": "ail",
+      "source": "./",
+      "description": "Agentic Intermediate Language: skills, MCP tools, hooks and commands for spec-first development."
+    }
+  ]
+}

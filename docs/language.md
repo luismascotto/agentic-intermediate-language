@@ -228,3 +228,9 @@ into the platform (`svg`, `hash`, `tablist`) and say what it does in words.
   against the `look` and `copy`.
 - A flow may also have an end-to-end check in `checks/e2e/` that drives the
   running app.
+
+## 8. Editors
+
+[`editors/vscode`](../editors/vscode) holds a TextMate grammar for this
+language (`source.ail`) and the VS Code extension that uses it. It colors
+`.ail.md` files and every ```` ```ail ```` block in Markdown.

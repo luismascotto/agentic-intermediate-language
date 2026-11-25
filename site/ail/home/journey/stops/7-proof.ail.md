@@ -48,7 +48,7 @@ node ProofScreens : view   level: experience
       And it shows a line containing "examples/tictactoe/checks/shots/"
   look
     layout   stack(v, gap: space.3, align: stretch) [ grid, where ]
-    grid     a div: display grid, grid-template-columns repeat(auto-fit, minmax(min(160px, 100%), 1fr)), gap space.3, width 100%
+    grid     a div: display grid, grid-template-columns repeat(auto-fit, minmax(min(128px, 100%), 1fr)), gap space.3, width 100%
     shot     a figure element: margin 0, display flex, flex-direction column, gap space.1
     frame    an img: display block, width 100%, height auto, box-sizing border-box, background color.surface, a 1px solid color.border border, radius.md
     caption  a figcaption: font.tiny, color.text.muted, text-align center; the check mark in color.pass, weight 700, then one space, then the check's name in quotes

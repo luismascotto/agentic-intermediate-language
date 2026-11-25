@@ -2,7 +2,8 @@ import type { ReactNode } from "react";
 import { Stack } from "../../parts/stack";
 import { CodeBlock } from "../../parts/code-block";
 
-type JourneyStopProps = {
+/** props    number: integer, color: token name, depth: text, chip: text, reader: text, headline: text, explanation: text, lines: list of text, label: text, file: text, highlight: list of text, turnsInto: text, figure: a rendered view, last?: boolean, browse?: text */
+export type JourneyStopProps = {
   number: number;
   color: string;
   depth: string;
@@ -20,7 +21,11 @@ type JourneyStopProps = {
   browse?: string;
 };
 
-/** "a numbered marker on a vertical rail in the stop's color, with a short depth label under the marker" */
+function tokenVar(token: string): string {
+  return `var(--${token.split(".").join("-")})`;
+}
+
+/** Every stop has the same anatomy, so the visitor compares levels instead of learning a new layout each time. */
 export function JourneyStop({
   number,
   color,
@@ -38,7 +43,7 @@ export function JourneyStop({
   last,
   browse,
 }: JourneyStopProps) {
-  const stopColor = `var(--${color.split(".").join("-")})`;
+  const stopColor = tokenVar(color);
   return (
     <article
       id={`stop-${number}`}
@@ -60,16 +65,16 @@ export function JourneyStop({
                   left: "calc(clamp(32px, 9vw, 56px) / 2 - 2px)",
                   top: 0,
                   width: "4px",
-                  background: stopColor,
                   height: "36px",
+                  background: stopColor,
                 }
               : {
                   position: "absolute",
                   left: "calc(clamp(32px, 9vw, 56px) / 2 - 2px)",
                   top: 0,
                   width: "4px",
-                  background: stopColor,
                   bottom: 0,
+                  background: stopColor,
                 }
           }
         />
@@ -218,8 +223,9 @@ export function JourneyStop({
             margin: 0,
           }}
         >
-          <span style={{ fontWeight: 700, color: "var(--color-accent)" }}>Turns into:</span>
-          {" "}
+          <span style={{ fontWeight: 700, color: "var(--color-accent)" }}>
+            Turns into:
+          </span>{" "}
           {turnsInto}
         </p>
       </Stack>

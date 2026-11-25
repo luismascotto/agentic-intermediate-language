@@ -1,6 +1,6 @@
-// ail-derived-from: TreeFigure@672eb8a1a8a19ee7
+// ail-derived-from: TreeFigure@6112706bf63833cd
 import { afterEach, expect, test } from "bun:test";
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import { TreeFigure } from "../../../src/gen/home/tree/tree-figure";
 
 afterEach(() => {
@@ -34,20 +34,11 @@ const names = [
 
 test("the picture", () => {
   render(<TreeFigure />);
-  const figure = screen.getByRole("img", { name: label });
-  expect(figure).toBeTruthy();
-
-  const leafTexts = new Set<string>();
-  for (const el of Array.from(figure.querySelectorAll("*"))) {
-    if (el.children.length === 0) {
-      const text = (el.textContent ?? "").trim();
-      if (text !== "") {
-        leafTexts.add(text);
-      }
+  const images = screen.getAllByRole("img", { name: label });
+  expect(images.length).toBeGreaterThan(0);
+  for (const image of images) {
+    for (const name of names) {
+      expect(within(image).getAllByText(name).length).toBeGreaterThan(0);
     }
-  }
-
-  for (const name of names) {
-    expect(leafTexts.has(name)).toBe(true);
   }
 });

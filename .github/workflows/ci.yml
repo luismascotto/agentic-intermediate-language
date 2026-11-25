@@ -43,3 +43,34 @@ jobs:
       - uses: ./
         with:
           project: site
+
+  vscode:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write        # on main: the .vsix is published as a release
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - name: Go to Definition and Find All References, in a real VS Code
+        run: xvfb-run -a node editors/vscode/test/run.js
+      - name: Package the VS Code extension
+        working-directory: editors/vscode
+        run: bunx @vscode/vsce@3.6.2 package --skip-license -o ail.vsix
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ail-vscode
+          path: editors/vscode/ail.vsix
+      - name: Publish it as a release, once per version
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(jq -r .version editors/vscode/package.json)
+          tag="vscode-v$version"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "$tag is already released"
+          else
+            gh release create "$tag" editors/vscode/ail.vsix --title "AIL for VS Code $version" \
+              --notes "Syntax highlighting for AIL. In VS Code: Extensions: Install from VSIX…, or code --install-extension ail.vsix"
+          fi

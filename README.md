@@ -43,6 +43,38 @@ marketplace in `/plugin`, or run `claude plugin update ail@agentic-intermediate-
 
 See **[docs/claude-code.md](docs/claude-code.md)** for the full guide.
 
+## Use it in Cursor or GitHub Copilot
+
+The same repository is a Cursor plugin and a GitHub Copilot plugin. All three
+plugins have the same skill, the same `build` and `adopt` commands, the same
+MCP tools and the same hooks. Builds use the login of the agent you work in,
+so a Cursor or Copilot subscription works too, with no API key.
+
+**Cursor** (2.5 or later): clone the plugin into Cursor's local plugin folder,
+then run **Developer: Reload Window**. Teams can instead import the repository
+as a team marketplace.
+
+```bash
+git clone https://github.com/ffMathy/agentic-intermediate-language ~/.cursor/plugins/local/ail
+```
+
+**GitHub Copilot CLI:**
+
+```bash
+copilot plugin marketplace add ffMathy/agentic-intermediate-language
+```
+
+```bash
+copilot plugin install ail@agentic-intermediate-language
+```
+
+**VS Code agent plugins:** add `"chat.plugins.marketplaces":
+["ffMathy/agentic-intermediate-language"]` to your settings, then install
+`ail` from Agent Customizations.
+
+See **[docs/cursor.md](docs/cursor.md)** and
+**[docs/copilot.md](docs/copilot.md)** for the full guides.
+
 ## Use it from a terminal
 
 The CLI needs [Bun](https://bun.sh) 1.2 or later.
@@ -55,7 +87,7 @@ Then, anywhere inside a project (any folder with an `ail.config.json`):
 
 | | |
 |---|---|
-| `ail build` | Compile whatever changed, then check everything: the spec is sound, the code is built from it, every check passes, and each screen matches its `look`. With nothing to compile it only checks, without a model, so CI runs it too. It uses Claude Code's login unless `ANTHROPIC_API_KEY` is set; `--model` picks another provider. |
+| `ail build` | Compile whatever changed, then check everything: the spec is sound, the code is built from it, every check passes, and each screen matches its `look`. With nothing to compile it only checks, without a model, so CI runs it too. Without `ANTHROPIC_API_KEY` it uses the login of Claude Code, the Cursor CLI or the Copilot CLI, whichever is installed; `--model` picks another provider (`claude-code`, `cursor`, `copilot`, `anthropic:`, `openai:` or `command:`). |
 | `ail adopt` | Does the existing app behave as its spec says? Starts it as `ail.config.json`'s `run` says, runs each flow's end-to-end check, and stops it. |
 | `ail show [what]` | The tree, one node (who uses it, and what a change to it reaches), or `changes`: what changed in meaning since a git ref, as reviewed in pull requests. Add `--shots <dir>` for screenshots of the proofs |
 
@@ -79,6 +111,17 @@ idioms. So the same spec compiles to TypeScript today and to Swift or C#
 tomorrow. `ail build` rejects target-language syntax, unknown sections and
 unknown labels. The full definition is in
 [docs/language.md](docs/language.md).
+
+## Highlighting in your editor
+
+The VS Code extension in [`editors/vscode`](editors/vscode) colors AIL in
+`.ail.md` files and in every ```` ```ail ```` block in Markdown, in VS Code,
+Cursor and github.dev. Go to Definition (F12) and Find All References work on
+node names across files: `<- Parent`, `uses`, `children`, `refined-by:` and
+components in a `look`. Get `ail.vsix` from the latest `vscode-v…`
+[release](https://github.com/ffMathy/agentic-intermediate-language/releases)
+and install it with **Extensions: Install from VSIX…**. GitHub itself only
+colors languages it has registered in Linguist; its grammar is this one.
 
 ## Adopt an existing app
 
@@ -116,7 +159,7 @@ Then change the `target` to the new technology and run `ail build`. Once
 against it, which proves it behaves like the old one. Each node's `sources` section records where its
 claims came from, for review.
 
-In Claude Code, `/ail:adopt` does all of this, one slice at a time. The
+In Claude Code, `/ail:adopt` does all of this, one slice at a time. So does the `adopt` command in Cursor and Copilot. The
 demo has an example check at
 [`examples/tictactoe/checks/e2e/`](examples/tictactoe/checks/e2e).
 
@@ -214,11 +257,14 @@ itself is defined in [docs/language.md](docs/language.md).
 ```
 src/                 the ail CLI and MCP server (Bun, TypeScript)
 prompts/             instructions given to the compiling model
-skills/ commands/ hooks/ .claude-plugin/    the Claude Code plugin
-.cursor/             Cursor rules, project skill, and MCP wiring for this repo
+skills/ commands/ hooks/    the agent plugins, shared by:
+  .claude-plugin/    Claude Code (and VS Code agent plugins)
+  .cursor-plugin/    Cursor
+  .github/plugin/    the GitHub Copilot CLI
 examples/tictactoe/  the demo: spec in ail/, generated code, derived checks, lock file
 examples/connect4/   Connect 4 kata: 6×7 drop game, same layout as the demo
-site/                the website, written in AIL (spec in site/ail/); its spec browser shows the example specs in a read-only Monaco editor
+editors/vscode/      the VS Code extension: highlighting, Go to Definition and references for AIL
+site/                the website, written in AIL (spec in site/ail/); its spec browser shows both example specs in a read-only Monaco editor
 tests/               toolchain tests
 ```
 
@@ -236,5 +282,6 @@ bun test
 bun run typecheck
 ```
 
-Working on this toolchain in **Cursor**: enable the project MCP server, then see
-**[docs/cursor.md](docs/cursor.md)**.
+Example projects depend on the linked `ail`. `examples/tictactoe` and
+`examples/connect4` need `bun install` in those folders before their checks
+run. Cursor users: see **[docs/cursor.md](docs/cursor.md)**.

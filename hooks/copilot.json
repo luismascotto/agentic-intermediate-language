@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "type": "command",
+        "matcher": "edit|create|write|str_replace_editor|multi_edit",
+        "bash": "r=\"${PLUGIN_ROOT:-${COPILOT_PLUGIN_ROOT:-${CLAUDE_PLUGIN_ROOT:-.}}}\"; if command -v bun >/dev/null && [ -f \"$r/src/cli.ts\" ]; then exec bun \"$r/src/cli.ts\" hook pre --for copilot; fi",
+        "powershell": "$r = @($env:PLUGIN_ROOT, $env:COPILOT_PLUGIN_ROOT, $env:CLAUDE_PLUGIN_ROOT, '.') | Where-Object { $_ } | Select-Object -First 1; if ((Get-Command bun -ErrorAction SilentlyContinue) -and (Test-Path \"$r/src/cli.ts\")) { $input | bun \"$r/src/cli.ts\" hook pre --for copilot; exit $LASTEXITCODE }",
+        "timeoutSec": 30
+      }
+    ],
+    "postToolUse": [
+      {
+        "type": "command",
+        "matcher": "edit|create|write|str_replace_editor|multi_edit",
+        "bash": "r=\"${PLUGIN_ROOT:-${COPILOT_PLUGIN_ROOT:-${CLAUDE_PLUGIN_ROOT:-.}}}\"; if command -v bun >/dev/null && [ -f \"$r/src/cli.ts\" ]; then exec bun \"$r/src/cli.ts\" hook post --for copilot; fi",
+        "powershell": "$r = @($env:PLUGIN_ROOT, $env:COPILOT_PLUGIN_ROOT, $env:CLAUDE_PLUGIN_ROOT, '.') | Where-Object { $_ } | Select-Object -First 1; if ((Get-Command bun -ErrorAction SilentlyContinue) -and (Test-Path \"$r/src/cli.ts\")) { $input | bun \"$r/src/cli.ts\" hook post --for copilot; exit $LASTEXITCODE }",
+        "timeoutSec": 30
+      }
+    ]
+  }
+}

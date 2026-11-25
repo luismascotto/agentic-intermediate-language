@@ -25,15 +25,15 @@ node Readers : flow   level: experience
       When the visitor presses the left arrow key
       Then the tab "Specialist" is selected and has focus
   look
-    band      Section with id "readers", tone raised
+    band      Section with id "readers", tone plain
     head      SectionHeading with text from readers.heading, lead from readers.lead
-    tabs      a div with role tablist; stack(h, gap: space.2, align: center, wrap: true) [ tab × 4 ]
-    tab       a native button: height 40px, pad 0 space.4, radius.md, font.sans at font.small, weight 600, cursor pointer
+    tabs      a div with role tablist: display grid, grid-template-columns repeat(auto-fit, minmax(140px, 1fr)), gap space.2, max-width 640px [ tab × 4 ]
+    tab       a native button: height 44px, pad 0 space.4, radius.md, font.sans at font.small, weight 600, cursor pointer
     picked    background the reader's color, a 1px solid border in the same color, color color.on.accent
     other     background color.surface, a 1px solid color.border border, color color.text
     colors    stakeholder color.level.product, design color.level.experience, engineer color.level.system, specialist color.level.specialist
-    panel     a div with role tabpanel: background color.surface, a 1px solid color.border border, radius.lg, pad space.6; stack(v, gap: space.4, align: stretch) [ level, text, ReadersTree ]
-    level     font.micro, weight 700, letter-spacing 0.08em, the reader's color
+    panel     a div with role tabpanel: background color.surface, a 1px solid color.border border, radius.lg, pad clamp(16px, 4vw, 24px); stack(v, gap: space.4, align: stretch) [ level, text, ReadersTree ]
+    level     font.tiny, weight 700, letter-spacing 0.08em, the reader's color
     text      a p: font.lead, line-height 1.6, color.text, max-width width.prose, margin 0
   copy
     readers.heading       "One spec, four readers"

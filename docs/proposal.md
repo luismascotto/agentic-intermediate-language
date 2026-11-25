@@ -142,7 +142,7 @@ The surface is deliberately small:
 | `ail build` | Write the token CSS, prune what was removed, derive tests from scenarios, then compile every node that changed (independent nodes in parallel). |
 | `ail show` | The tree, a node, or the changes (a semantic diff against a git ref). |
 | MCP server | two tools: `ail_show`, and `ail_build` (the same build as the CLI) |
-| Plugin | the `ail` skill, the `/ail:build` command, the MCP server, and hooks that block edits to generated files and lint every `.ail.md` edit |
+| Plugin | for Claude Code, Cursor and GitHub Copilot (CLI and VS Code): the `ail` skill, the `build` and `adopt` commands, the MCP server, and hooks that block edits to generated files and lint every `.ail.md` edit |
 | GitHub Action | `ail build`, plus the spec changes in the job summary |
 
 Plumbing for the plugin (`ail mcp`, `ail hook`) stays out of the main help.
@@ -156,6 +156,13 @@ Built-in tools, MCP and slash commands are off, and it runs in an empty
 directory, so no CLAUDE.md or project file leaks into a node's context.
   It is the default model when `ANTHROPIC_API_KEY` is not set. In CI, give
   Claude Code a token from `claude setup-token` as `CLAUDE_CODE_OAUTH_TOKEN`.
+
+The same holds on a Cursor or Copilot subscription. The `cursor` provider
+runs `cursor-agent -p --mode ask` and the `copilot` provider runs
+`copilot -s`, both from an empty directory with the system prompt first and no
+custom instructions. Without an API key, the default is the first agent CLI
+installed. The one the plugin runs in goes first, because each plugin's MCP
+config sets `AIL_HOST`.
 
 The compile loop is ordinary code, so it behaves the same whichever vendor
 fills in the leaves:
